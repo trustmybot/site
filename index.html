@@ -60,15 +60,9 @@ try {
 </script>
 </head>
 <body>
-<div class="topbar">
-  <button type="button" id="theme-toggle" aria-label="Switch to light theme">
-    <svg class="icon-sun" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
-    <svg class="icon-moon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
-  </button>
-</div>
 <main>
   <header class="hero">
-    <h1>TrustMyBot: Trust my bot like my bro</h1>
+    <h1>TrustMyBot</h1>
     <img id="hero-img" src="hero-auto.svg" width="1080" height="1150" alt="Animated diagram: you hand an idea to bro, two swe agents build it, and pr-reviewer approves the work before it is pushed to GitHub.">
     <p class="actions">
       <a class="btn primary" id="install-btn" href="#install">Install in Claude Code</a>
@@ -85,12 +79,18 @@ claude plugin install tmb@trustmybot --scope project</code></pre>
 </main>
 
 <footer>
-  <p>TrustMyBot (TMB). MIT licensed.</p>
-  <nav>
-    <a href="https://github.com/trustmybot/plugin">GitHub</a>
-    <a href="https://github.com/trustmybot/plugin/blob/main/CHANGELOG.md">Changelog</a>
-    <a href="https://github.com/trustmybot/plugin/issues/new">Report an issue</a>
-  </nav>
+  <div class="footer-info">
+    <p>TrustMyBot (TMB). MIT licensed.</p>
+    <nav>
+      <a href="https://github.com/trustmybot/plugin">GitHub</a>
+      <a href="https://github.com/trustmybot/plugin/blob/main/CHANGELOG.md">Changelog</a>
+      <a href="https://github.com/trustmybot/plugin/issues/new">Report an issue</a>
+    </nav>
+  </div>
+  <button type="button" id="theme-toggle" aria-label="Switch to light theme">
+    <svg class="icon-sun" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+    <svg class="icon-moon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+  </button>
 </footer>
 
 <script>
