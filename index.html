@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrustMyBot — Multi-agent harness for Claude Code</title>
+<meta name="description" content="TrustMyBot (TMB) is a free, open-source plugin for Claude Code. One agent plans, one builds, and a separate reviewer signs off before anything is pushed.">
+<link rel="canonical" href="https://trustmybot.org/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://trustmybot.org/">
+<meta property="og:title" content="TrustMyBot: Trust my bot like my bro">
+<meta property="og:description" content="One agent plans, one builds, a separate reviewer signs off before anything is pushed. Memory survives restarts. MIT, free forever.">
+<meta property="og:image" content="https://trustmybot.org/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>
+try {
+  var storedTheme = localStorage.getItem('theme');
+  if (storedTheme === 'light' || storedTheme === 'dark') document.documentElement.setAttribute('data-theme', storedTheme);
+} catch (e) {}
+</script>
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://trustmybot.org/#app",
+      "name": "TrustMyBot",
+      "alternateName": "TMB",
+      "description": "TrustMyBot (TMB) is a free, open-source plugin for Claude Code. One agent plans, one builds, and a separate reviewer signs off before anything is pushed.",
+      "applicationCategory": "DeveloperApplication",
+      "applicationSubCategory": "Claude Code plugin",
+      "operatingSystem": "macOS, Linux, Windows (WSL 2)",
+      "license": "https://opensource.org/licenses/MIT",
+      "url": "https://trustmybot.org/",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "sameAs": [
+        "https://github.com/trustmybot",
+        "https://github.com/trustmybot/plugin"
+      ]
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "TrustMyBot",
+      "codeRepository": "https://github.com/trustmybot/plugin",
+      "license": "https://opensource.org/licenses/MIT",
+      "targetProduct": { "@id": "https://trustmybot.org/#app" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <h1><span class="accent">Trust My Bot</span> Like My Bro</h1>
+    <img id="hero-img" src="hero-auto.svg" width="1080" height="1150" alt="Animated diagram: you hand an idea to bro, two swe agents build it, and pr-reviewer approves the work before it is pushed to GitHub.">
+    <p class="actions">
+      <a class="btn primary" id="install-btn" href="#install">Install in Claude Code</a>
+      <a class="btn secondary" href="https://github.com/trustmybot/plugin">View source on GitHub</a>
+    </p>
+  </header>
+
+  <section id="install">
+    <h2>Install</h2>
+    <p class="hint">In your project:</p>
+    <pre><code id="install-cmds">claude plugin marketplace add trustmybot/marketplace --scope project
+claude plugin install tmb@trustmybot --scope project</code></pre>
+  </section>
+</main>
+
+<footer>
+  <div class="footer-info">
+    <p>TrustMyBot (TMB). MIT licensed.</p>
+    <nav>
+      <a href="https://github.com/trustmybot/plugin">GitHub</a>
+      <a href="https://github.com/trustmybot/plugin/blob/main/CHANGELOG.md">Changelog</a>
+      <a href="https://github.com/trustmybot/plugin/issues/new">Report an issue</a>
+    </nav>
+  </div>
+  <button type="button" id="theme-toggle" aria-label="Switch to light theme">
+    <svg class="icon-sun" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+    <svg class="icon-moon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+  </button>
+</footer>
+
+<script>
+document.getElementById('install-btn').addEventListener('click', function () {
+  var btn = this;
+  var cmds = document.getElementById('install-cmds').textContent;
+  if (!navigator.clipboard) return;
+  navigator.clipboard.writeText(cmds).then(function () {
+    btn.textContent = 'Copied';
+    setTimeout(function () { btn.textContent = 'Install in Claude Code'; }, 2000);
+  }, function () {});
+});
+</script>
+<script>
+(function () {
+  var root = document.documentElement;
+  var hero = document.getElementById('hero-img');
+  var toggle = document.getElementById('theme-toggle');
+
+  function effectiveTheme() {
+    var set = root.getAttribute('data-theme');
+    if (set === 'light' || set === 'dark') return set;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  }
+
+  function label(theme) {
+    toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  }
+
+  toggle.addEventListener('click', function () {
+    var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    root.setAttribute('data-theme', next);
+    hero.setAttribute('src', 'hero-' + next + '.svg');
+    label(next);
+  });
+
+  var stored = root.getAttribute('data-theme');
+  if (stored === 'light' || stored === 'dark') hero.setAttribute('src', 'hero-' + stored + '.svg');
+  label(effectiveTheme());
+  if (window.matchMedia) {
+    var query = window.matchMedia('(prefers-color-scheme: light)');
+    var onChange = function () { label(effectiveTheme()); };
+    if (query.addEventListener) query.addEventListener('change', onChange);
+  }
+})();
+</script>
+</body>
+</html>
