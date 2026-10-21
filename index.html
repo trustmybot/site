@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrustMyBot — Multi-agent harness for Claude Code</title>
+<meta name="description" content="TrustMyBot (TMB) is a free, open-source plugin for Claude Code. One agent plans, one builds, and a separate reviewer signs off before anything is pushed.">
+<link rel="canonical" href="https://trustmybot.org/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://trustmybot.org/">
+<meta property="og:title" content="TrustMyBot: Claude Code agents that never grade their own work">
+<meta property="og:description" content="One agent plans, one builds, a separate reviewer signs off before anything is pushed. Memory survives restarts. MIT, free forever.">
+<meta property="og:image" content="https://trustmybot.org/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="dark light">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://trustmybot.org/#app",
+      "name": "TrustMyBot",
+      "alternateName": "TMB",
+      "description": "TrustMyBot (TMB) is a free, open-source plugin for Claude Code. One agent plans, one builds, and a separate reviewer signs off before anything is pushed.",
+      "applicationCategory": "DeveloperApplication",
+      "applicationSubCategory": "Claude Code plugin",
+      "operatingSystem": "macOS, Linux, Windows (WSL 2)",
+      "softwareRequirements": "Claude Code 2.1.295 or later",
+      "license": "https://opensource.org/licenses/MIT",
+      "url": "https://trustmybot.org/",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "sameAs": [
+        "https://github.com/trustmybot",
+        "https://github.com/trustmybot/plugin"
+      ]
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "name": "TrustMyBot",
+      "codeRepository": "https://github.com/trustmybot/plugin",
+      "license": "https://opensource.org/licenses/MIT",
+      "targetProduct": { "@id": "https://trustmybot.org/#app" }
+    }
+  ]
+}
+</script>
+</head>
+<body>
+<main>
+  <header class="hero">
+    <h1>TrustMyBot: Claude Code agents that never grade their own work</h1>
+    <p class="sub">One agent plans, one builds, and a separate reviewer has to approve before anything is pushed. A free, MIT-licensed plugin for Claude Code.</p>
+    <img src="hero.svg" width="1080" height="1150" alt="Animated diagram: you hand an idea to bro, two swe agents build it, and pr-reviewer approves the work before it is pushed to GitHub.">
+    <p class="actions">
+      <a class="btn primary" id="install-btn" href="#install">Install in Claude Code</a>
+      <a class="btn secondary" href="https://github.com/trustmybot/plugin">View source on GitHub</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>It said done. It wasn't.</h2>
+    <p>bro re-runs each task's checks when the work comes back, and pr-reviewer has to sign off on every commit before <code>git push</code> goes through.</p>
+  </section>
+
+  <section>
+    <h2>It forgot everything after a restart.</h2>
+    <p>Plans, decisions and review verdicts are saved in your project, so after a reset or a killed session bro picks up where it left off.</p>
+  </section>
+
+  <section>
+    <h2>It drifted off task.</h2>
+    <p>bro writes the plan and its checks before any code is written. swe builds one task at a time against that plan.</p>
+  </section>
+
+  <section>
+    <h2>It touched files it shouldn't.</h2>
+    <p>swe can only write inside its own copy of your repo, and force-pushes to protected branches are blocked.</p>
+  </section>
+
+  <section>
+    <h2>Who it's for</h2>
+    <p>Long-running, multi-task work on a codebase you keep coming back to. For one quick edit, plain Claude Code is leaner.</p>
+  </section>
+
+  <section id="install">
+    <h2>Install</h2>
+    <p>Requires Claude Code 2.1.295 or later. In Claude Code, run:</p>
+    <pre><code id="install-cmds">/plugin marketplace add trustmybot/marketplace
+/plugin install tmb@trustmybot</code></pre>
+    <p>Then:</p>
+    <pre><code>@bro write a todo cli</code></pre>
+  </section>
+
+  <section>
+    <h2>Free forever.</h2>
+    <p>MIT. Fork it, ship it, sell it. TMB Enterprise for teams is in development and will never gate what the plugin does on its own.</p>
+  </section>
+</main>
+
+<footer>
+  <p>TrustMyBot (TMB). MIT licensed.</p>
+  <nav>
+    <a href="https://github.com/trustmybot/plugin">GitHub</a>
+    <a href="https://github.com/trustmybot/plugin/blob/main/CHANGELOG.md">Changelog</a>
+    <a href="https://github.com/trustmybot/plugin/issues/new">Report an issue</a>
+  </nav>
+</footer>
+
+<script>
+document.getElementById('install-btn').addEventListener('click', function () {
+  var btn = this;
+  var cmds = document.getElementById('install-cmds').textContent;
+  if (!navigator.clipboard) return;
+  navigator.clipboard.writeText(cmds).then(function () {
+    btn.textContent = 'Copied';
+    setTimeout(function () { btn.textContent = 'Install in Claude Code'; }, 2000);
+  }, function () {});
+});
+</script>
+</body>
+</html>
