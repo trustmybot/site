@@ -108,6 +108,8 @@ h2 {
 
 .hero h1 { text-align: center; }
 
+h1 .accent { display: block; color: var(--accent); }
+
 .hero img {
   display: block;
   max-width: 100%;
