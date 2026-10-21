@@ -62,16 +62,14 @@ try {
 </head>
 <body>
 <div class="topbar">
-  <div class="theme-switch" role="group" aria-label="Colour theme">
-    <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
-    <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
-    <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
-  </div>
+  <button type="button" id="theme-toggle" aria-label="Switch to light theme">
+    <svg class="icon-sun" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4.5"/><path d="M12 1.5v2.5M12 20v2.5M1.5 12H4M20 12h2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/></svg>
+    <svg class="icon-moon" aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20.5 14.5A8.5 8.5 0 0 1 9.5 3.5a8.5 8.5 0 1 0 11 11z"/></svg>
+  </button>
 </div>
 <main>
   <header class="hero">
     <h1>TrustMyBot: Claude Code agents that never grade their own work</h1>
-    <p class="sub">One agent plans, one builds, and a separate reviewer has to approve before anything is pushed. A free, MIT-licensed plugin for Claude Code.</p>
     <img id="hero-img" src="hero-auto.svg" width="1080" height="1150" alt="Animated diagram: you hand an idea to bro, two swe agents build it, and pr-reviewer approves the work before it is pushed to GitHub.">
     <p class="actions">
       <a class="btn primary" id="install-btn" href="#install">Install in Claude Code</a>
@@ -79,43 +77,11 @@ try {
     </p>
   </header>
 
-  <section>
-    <h2>It said done. It wasn't.</h2>
-    <p>bro re-runs each task's checks when the work comes back, and pr-reviewer has to sign off on every commit before <code>git push</code> goes through.</p>
-  </section>
-
-  <section>
-    <h2>It forgot everything after a restart.</h2>
-    <p>Plans, decisions and review verdicts are saved in your project, so after a reset or a killed session bro picks up where it left off.</p>
-  </section>
-
-  <section>
-    <h2>It drifted off task.</h2>
-    <p>bro writes the plan and its checks before any code is written. swe builds one task at a time against that plan.</p>
-  </section>
-
-  <section>
-    <h2>It touched files it shouldn't.</h2>
-    <p>swe can only write inside its own copy of your repo, and force-pushes to protected branches are blocked.</p>
-  </section>
-
-  <section>
-    <h2>Who it's for</h2>
-    <p>Long-running, multi-task work on a codebase you keep coming back to. For one quick edit, plain Claude Code is leaner.</p>
-  </section>
-
   <section id="install">
     <h2>Install</h2>
-    <p>Requires Claude Code 2.1.295 or later. In Claude Code, run:</p>
+    <p class="req">Claude Code 2.1.295+</p>
     <pre><code id="install-cmds">/plugin marketplace add trustmybot/marketplace
 /plugin install tmb@trustmybot</code></pre>
-    <p>Then:</p>
-    <pre><code>@bro write a todo cli</code></pre>
-  </section>
-
-  <section>
-    <h2>Free forever.</h2>
-    <p>MIT. Fork it, ship it, sell it. TMB Enterprise for teams is in development and will never gate what the plugin does on its own.</p>
   </section>
 </main>
 
@@ -143,37 +109,34 @@ document.getElementById('install-btn').addEventListener('click', function () {
 (function () {
   var root = document.documentElement;
   var hero = document.getElementById('hero-img');
-  var buttons = document.querySelectorAll('[data-theme-choice]');
+  var toggle = document.getElementById('theme-toggle');
 
-  function apply(choice) {
-    if (choice === 'light' || choice === 'dark') {
-      root.setAttribute('data-theme', choice);
-    } else {
-      choice = 'auto';
-      root.removeAttribute('data-theme');
-    }
-    hero.setAttribute('src', 'hero-' + choice + '.svg');
-    for (var i = 0; i < buttons.length; i++) {
-      buttons[i].setAttribute('aria-pressed', String(buttons[i].getAttribute('data-theme-choice') === choice));
-    }
+  function effectiveTheme() {
+    var set = root.getAttribute('data-theme');
+    if (set === 'light' || set === 'dark') return set;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
   }
 
-  function store(choice) {
-    try {
-      if (choice === 'light' || choice === 'dark') localStorage.setItem('theme', choice);
-      else localStorage.removeItem('theme');
-    } catch (e) {}
+  function label(theme) {
+    toggle.setAttribute('aria-label', theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
   }
 
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function () {
-      var choice = this.getAttribute('data-theme-choice');
-      store(choice);
-      apply(choice);
-    });
-  }
+  toggle.addEventListener('click', function () {
+    var next = effectiveTheme() === 'dark' ? 'light' : 'dark';
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    root.setAttribute('data-theme', next);
+    hero.setAttribute('src', 'hero-' + next + '.svg');
+    label(next);
+  });
 
-  apply(root.getAttribute('data-theme'));
+  var stored = root.getAttribute('data-theme');
+  if (stored === 'light' || stored === 'dark') hero.setAttribute('src', 'hero-' + stored + '.svg');
+  label(effectiveTheme());
+  if (window.matchMedia) {
+    var query = window.matchMedia('(prefers-color-scheme: light)');
+    var onChange = function () { label(effectiveTheme()); };
+    if (query.addEventListener) query.addEventListener('change', onChange);
+  }
 })();
 </script>
 </body>
