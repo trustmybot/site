@@ -8,8 +8,8 @@
   --accent-text: #0d1117;
   --link: #58a6ff;
   --line: #30363d;
-  --icon-sun: inline;
-  --icon-moon: none;
+  --icon-sun: none;
+  --icon-moon: inline;
   color-scheme: dark;
 }
 
@@ -22,8 +22,8 @@
   --accent-text: #ffffff;
   --link: #0969da;
   --line: #d0d7de;
-  --icon-sun: none;
-  --icon-moon: inline;
+  --icon-sun: inline;
+  --icon-moon: none;
   color-scheme: light;
 }
 
@@ -37,8 +37,8 @@
     --accent-text: #ffffff;
     --link: #0969da;
     --line: #d0d7de;
-    --icon-sun: none;
-    --icon-moon: inline;
+    --icon-sun: inline;
+    --icon-moon: none;
     color-scheme: light;
   }
 }
@@ -123,8 +123,16 @@ h2 {
 .actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
   margin: 1.25rem 0 2rem;
+}
+
+.actions .btn {
+  flex: 1 1 14rem;
+  max-width: 20rem;
+  min-height: 44px;
+  text-align: center;
 }
 
 .btn {
