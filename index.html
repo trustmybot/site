@@ -16,6 +16,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="dark light">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<script>
+try {
+  var storedTheme = localStorage.getItem('theme');
+  if (storedTheme === 'light' || storedTheme === 'dark') document.documentElement.setAttribute('data-theme', storedTheme);
+} catch (e) {}
+</script>
 <link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
 {
@@ -55,11 +61,18 @@
 </script>
 </head>
 <body>
+<div class="topbar">
+  <div class="theme-switch" role="group" aria-label="Colour theme">
+    <button type="button" data-theme-choice="auto" aria-pressed="true">Auto</button>
+    <button type="button" data-theme-choice="light" aria-pressed="false">Light</button>
+    <button type="button" data-theme-choice="dark" aria-pressed="false">Dark</button>
+  </div>
+</div>
 <main>
   <header class="hero">
     <h1>TrustMyBot: Claude Code agents that never grade their own work</h1>
     <p class="sub">One agent plans, one builds, and a separate reviewer has to approve before anything is pushed. A free, MIT-licensed plugin for Claude Code.</p>
-    <img src="hero.svg" width="1080" height="1150" alt="Animated diagram: you hand an idea to bro, two swe agents build it, and pr-reviewer approves the work before it is pushed to GitHub.">
+    <img id="hero-img" src="hero-auto.svg" width="1080" height="1150" alt="Animated diagram: you hand an idea to bro, two swe agents build it, and pr-reviewer approves the work before it is pushed to GitHub.">
     <p class="actions">
       <a class="btn primary" id="install-btn" href="#install">Install in Claude Code</a>
       <a class="btn secondary" href="https://github.com/trustmybot/plugin">View source on GitHub</a>
@@ -125,6 +138,43 @@ document.getElementById('install-btn').addEventListener('click', function () {
     setTimeout(function () { btn.textContent = 'Install in Claude Code'; }, 2000);
   }, function () {});
 });
+</script>
+<script>
+(function () {
+  var root = document.documentElement;
+  var hero = document.getElementById('hero-img');
+  var buttons = document.querySelectorAll('[data-theme-choice]');
+
+  function apply(choice) {
+    if (choice === 'light' || choice === 'dark') {
+      root.setAttribute('data-theme', choice);
+    } else {
+      choice = 'auto';
+      root.removeAttribute('data-theme');
+    }
+    hero.setAttribute('src', 'hero-' + choice + '.svg');
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].setAttribute('aria-pressed', String(buttons[i].getAttribute('data-theme-choice') === choice));
+    }
+  }
+
+  function store(choice) {
+    try {
+      if (choice === 'light' || choice === 'dark') localStorage.setItem('theme', choice);
+      else localStorage.removeItem('theme');
+    } catch (e) {}
+  }
+
+  for (var i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener('click', function () {
+      var choice = this.getAttribute('data-theme-choice');
+      store(choice);
+      apply(choice);
+    });
+  }
+
+  apply(root.getAttribute('data-theme'));
+})();
 </script>
 </body>
 </html>
