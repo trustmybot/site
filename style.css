@@ -161,7 +161,7 @@ section {
   border-top: 1px solid var(--line);
 }
 
-.req {
+.hint {
   margin: 0 0 0.75rem;
   color: var(--muted);
   font-size: 0.875rem;
@@ -184,7 +184,8 @@ pre {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 0.9rem 1rem;
-  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
   margin: 0;
 }
 

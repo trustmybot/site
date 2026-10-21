@@ -36,7 +36,6 @@ try {
       "applicationCategory": "DeveloperApplication",
       "applicationSubCategory": "Claude Code plugin",
       "operatingSystem": "macOS, Linux, Windows (WSL 2)",
-      "softwareRequirements": "Claude Code 2.1.295 or later",
       "license": "https://opensource.org/licenses/MIT",
       "url": "https://trustmybot.org/",
       "offers": {
@@ -79,9 +78,9 @@ try {
 
   <section id="install">
     <h2>Install</h2>
-    <p class="req">Claude Code 2.1.295+</p>
-    <pre><code id="install-cmds">/plugin marketplace add trustmybot/marketplace
-/plugin install tmb@trustmybot</code></pre>
+    <p class="hint">In your project:</p>
+    <pre><code id="install-cmds">claude plugin marketplace add trustmybot/marketplace --scope project
+claude plugin install tmb@trustmybot --scope project</code></pre>
   </section>
 </main>
 
