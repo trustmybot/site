@@ -1,6 +1,6 @@
 # TrustMyBot site
 
-Source of [trustmybot.org](https://trustmybot.org), served by GitHub Pages from `main` as is. Hand-written HTML, CSS and a little vanilla JS: no framework, no build step, no external requests.
+Source of [trustmy.bot](https://trustmy.bot), served by GitHub Pages from `main` as is. Hand-written HTML, CSS and a little vanilla JS: no framework, no build step, no external requests.
 
 The page is intentionally words-light: the animated hero carries the story, and the text is limited to the title, two buttons, the install commands and the footer.
 
